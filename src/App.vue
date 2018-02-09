@@ -11,7 +11,7 @@
 
   export default {
     components: {
-      ActionBar,Tab
+      ActionBar, Tab
     }
   };
 </script>

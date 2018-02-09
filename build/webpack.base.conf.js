@@ -1,11 +1,12 @@
-'use strict'
-const path = require('path')
-const utils = require('./utils')
-const config = require('../config')
-const vueLoaderConfig = require('./vue-loader.conf')
+'use strict';
+const path = require('path');
+const utils = require('./utils');
+const config = require('../config');
+const vueLoaderConfig = require('./vue-loader.conf');
+const webpack = require('webpack'); // 【vue-cli使用px2rem】 http://blog.csdn.net/u010214074/article/details/78479840
 
-function resolve (dir) {
-  return path.join(__dirname, '..', dir)
+function resolve(dir) {
+  return path.join(__dirname, '..', dir);
 }
 
 const createLintingRule = () => ({
@@ -17,7 +18,7 @@ const createLintingRule = () => ({
     formatter: require('eslint-friendly-formatter'),
     emitWarning: !config.dev.showEslintErrorsInOverlay
   }
-})
+});
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
@@ -76,6 +77,13 @@ module.exports = {
       }
     ]
   },
+  plugins: [
+    new webpack.LoaderOptionsPlugin({  // 【vue-cli使用px2rem】 http://blog.csdn.net/u010214074/article/details/78479840
+      vue: {
+        postcss: [require('postcss-px2rem')({remUnit: 16})]
+      },
+    })
+  ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
     // source contains it (although only uses it if it's native).
@@ -88,4 +96,4 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   }
-}
+};
