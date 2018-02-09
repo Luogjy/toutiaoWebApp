@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!--<action-bar/>-->
+    <action-bar/>
     <tab/>
   </div>
 </template>

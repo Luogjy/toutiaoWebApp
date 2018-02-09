@@ -12,7 +12,7 @@
         <li class="title">问答</li>
       </ul>
     </div>
-    <!--<img class="add" src="../img/add.png">-->
+    <img class="add" src="../img/add.png">
   </section>
 
 </template>
@@ -27,28 +27,20 @@
   @import "../css/color";
 
   $tab_height: 36px;
-  $tab_width: 320px;
   $title_width: 55px;
-  $img_width: 20px;
 
   .wrapper {
+    display: flex;
+    flex-direction: row;
     position: relative;
-    .add {
-      width: $img_width;
-      background: green;
-      position: absolute;
-      right: 0;
-      top: 0;
-      padding: ($tab_height - $img_width)/2;
-    }
 
     .tab-wrapper {
-      width: $tab_width;
+      /*对剩余空间进行划分。可以小数。*/
+      flex-grow: 1;
       height: $tab_height;
       /*父不换行且横向滚动*/
       white-space: nowrap;
       overflow-x: scroll;
-      position: relative;
 
       .title-wrapper {
         box-sizing: border-box;
@@ -74,6 +66,14 @@
           font-size: 12px;
         }
       }
+    }
+
+    .add {
+      box-sizing: border-box;
+      width: $tab_height;
+      height: $tab_height;
+      padding: 12px;
+      background: $main_color;
     }
 
     /*tab底部的指示器*/
