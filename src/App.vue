@@ -1,23 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <!--<action-bar/>-->
+    <tab/>
   </div>
 </template>
 
 <script>
-export default {
-  name: 'App'
-}
+  import ActionBar from './common/components/action-bar';
+  import Tab from './common/components/tab';
+
+  export default {
+    components: {
+      ActionBar,Tab
+    }
+  };
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
