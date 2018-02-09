@@ -87,10 +87,10 @@
       height: 0;
       display: inline-block;
       position: absolute;
-      top: 33px;
+      top: 34px;
       left: 0;
       /* margin-top: -68px; */
-      border-bottom: 3px solid #000;
+      border-bottom: 2px solid #C80000;
     }
   }
 </style>

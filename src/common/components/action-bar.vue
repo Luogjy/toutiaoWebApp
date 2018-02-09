@@ -125,7 +125,6 @@
       float: right;
       .word {
         @include img;
-        display: inline-block;
         margin-right: 12px;
       }
     }
