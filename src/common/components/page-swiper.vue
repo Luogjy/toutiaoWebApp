@@ -22,7 +22,7 @@
   export default {
     data() {
       return {
-        timer:null,
+        preProgress: 0,
         tabItems: [
           {name: '推荐'},
           {name: '热点'},
@@ -42,8 +42,10 @@
           watchSlidesProgress: true,
           on: {
             progress: function (progress) {
-              // that.swiperProgress = progress; // 这么写会页面滑动切换卡顿
-              console.log(progress);
+              if (Math.abs(that.preProgress - progress) > 0.15) { // todo【待优化】 父组件给子组件通过属性传递值时，太频繁会导致卡顿，先暂时这样过滤一下
+                that.swiperProgress = progress;
+              }
+              that.preProgress = progress;
             }
           }
         }
