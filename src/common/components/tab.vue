@@ -4,6 +4,7 @@
       <ul class="title-wrapper">
         <li @click="clickItem(index)" class="title" :key="index" v-for="(item,index) in items">{{item.name}}</li>
       </ul>
+      <div v-show="items.length" ref="indicator" class="indicator"></div>
     </div>
     <img class="add" src="../img/add.png">
   </section>
@@ -12,6 +13,11 @@
 
 <script>
   export default {
+    data() {
+      return {
+        tab_width: 55 // tab宽度
+      };
+    },
     props: {
       items: {
         type: Array,
@@ -19,14 +25,31 @@
           return [];
         }
       },
-      SwiperProgress: {
+      swiperProgress: {
         type: Number,
         default: 0
+      }
+    },
+    mounted() {
+      if (this.items.length < 3) {
+        this.indicator.style.width = this.items.length * this.tab_width + 'px';
+      }
+    },
+    watch: {
+      swiperProgress(newValue, oldValue) {
+        // this.indicator.style.left = (Number.parseFloat(this.indicator.style.width) * newValue) + 'px';
+        // this.indicator.offsetLeft = 50 + 'px';
+        // console.log(newValue);
       }
     },
     methods: {
       clickItem(index) {
         this.$emit('clickItem', index);
+      }
+    },
+    computed: {
+      indicator() {
+        return this.$refs.indicator;
       }
     }
   };
@@ -36,12 +59,12 @@
   @import "../css/color";
 
   $tab_height: 36px;
-  $title_width: 55px;
+  /*tab宽度*/
+  $tab_width: 55px;
 
   .wrapper {
     display: flex;
     flex-direction: row;
-    position: relative;
 
     .tab-wrapper {
       /*对剩余空间进行划分。可以小数。*/
@@ -50,6 +73,7 @@
       /*父不换行且横向滚动*/
       white-space: nowrap;
       overflow-x: scroll;
+      position: relative;
 
       .title-wrapper {
         box-sizing: border-box;
@@ -61,7 +85,7 @@
         background: $main_color;
 
         .title {
-          width: $title_width;
+          width: $tab_width;
 
           /*空间不足时，收缩比例。默认为1。0为不收缩。如果所有子元素都不收缩就溢出。*/
           flex-shrink: 0;
@@ -75,6 +99,19 @@
           font-size: 12px;
         }
       }
+
+      /*tab底部的指示器*/
+      .indicator {
+        content: " ";
+        width: $tab_width;
+        height: 0;
+        display: inline-block;
+        position: absolute;
+        top: 34px;
+        left: 0;
+        /* margin-top: -68px; */
+        border-bottom: 2px solid #C80000;
+      }
     }
 
     .add {
@@ -83,23 +120,6 @@
       height: $tab_height;
       padding: 12px;
       background: $main_color;
-    }
-
-    /*tab底部的指示器*/
-    /*& 代表嵌套外层的父选择器，即外层选择器链占位符
-    https://www.sass.hk/docs/
-    例如这里编译成.wrapper::after
-    */
-    &::after {
-      content: " ";
-      width: $title_width;
-      height: 0;
-      display: inline-block;
-      position: absolute;
-      top: 34px;
-      left: 0;
-      /* margin-top: -68px; */
-      border-bottom: 2px solid #C80000;
     }
   }
 </style>
