@@ -31,7 +31,7 @@ module.exports = {
     "error"或者2，出现问题会报错
     规范细则 https://github.com/standard/standard/blob/master/docs/RULES-zhcn.md
     */
-    // 'eol-last': 0, // 文件末尾强制换行
+    'eol-last': 0, // 文件末尾强制换行
     'space-before-function-paren': 0, // 函数括号前是否空格
     'semi': 0,
     'indent': 0

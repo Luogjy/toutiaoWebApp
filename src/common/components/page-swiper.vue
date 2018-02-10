@@ -1,6 +1,6 @@
 <template>
   <section class="my-wrapper">
-    <tab @clickItem="currentItem" :items="tabItems" :swiper-progress="swiperProgress"/>
+    <tab @clickItem="currentItem" :items="tabItems"/>
     <div ref="mySwiperWrapper" class="my-swiper-wrapper">
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide :key="index" v-for="(item,index) in tabItems">
@@ -17,23 +17,22 @@
   import Tab from './tab';
   import 'swiper/dist/css/swiper.css'; // vue-awesome-swiper的样式表
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
+  import {mapMutations} from 'vuex';
 
   let that;
   export default {
     data() {
       return {
-        preProgress: 0,
         tabItems: [
           {name: '推荐'},
-          {name: '热点'},
-          {name: '视频'},
-          {name: '社会'},
-          {name: '娱乐'},
-          {name: '科技'},
-          {name: '汽车'},
-          {name: '问答'}
+          {name: '热点'}
+          // {name: '视频'},
+          // {name: '社会'},
+          // {name: '娱乐'},
+          // {name: '科技'},
+          // {name: '汽车'},
+          // {name: '问答'}
         ],
-        swiperProgress: 0,
         swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
           scrollbar: {
             el: '.swiper-scrollbar'
@@ -42,10 +41,8 @@
           watchSlidesProgress: true,
           on: {
             progress: function (progress) {
-              if (Math.abs(that.preProgress - progress) > 0.15) { // todo【待优化】 父组件给子组件通过属性传递值时，太频繁会导致卡顿，先暂时这样过滤一下
-                that.swiperProgress = progress;
-              }
-              that.preProgress = progress;
+              // that.swiperProgress = progress; // 本来想这么给子组件属性传值的，但频率太高。父组件给子组件通过属性传递值时，太频繁会导致卡顿
+              that.setSwiperProgress(progress);
             }
           }
         }
@@ -79,13 +76,18 @@
           if (this.swiper.el.children[0]) {
             if (this.swiper.el.children[0].children[0]) {
               this.swiper.el.children[0].children[0].children[0].style.height = this.swiperWrapper.offsetHeight/* 实际高度 */ + 'px';
-              // for (let i = 0; i < this.swiper.el.children.length; i++) {
-              //   this.swiper.el.children[i].children[0].children[0].style.height = this.swiperWrapper.offsetHeight/* 实际高度 */ + 'px';
-              // }
             }
           }
         }, 200);
-      }
+      },
+      /*
+        https://vuex.vuejs.org/zh-cn/mutations.html
+        你可以在组件中使用 this.$store.commit('xxx') 提交 mutation，或者使用 mapMutations 辅助函数将组件中的 methods 映射为 store.commit 调用（需要在根节点注入 store）
+        【mapMutations放在methods下】
+     */
+      ...mapMutations({
+        setSwiperProgress: 'SWIPER_PROGRESS'
+      })
     },
     components: {
       Tab, swiper, swiperSlide

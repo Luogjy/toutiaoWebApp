@@ -12,6 +12,8 @@
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
+
   export default {
     data() {
       return {
@@ -24,11 +26,11 @@
         default: function () {
           return [];
         }
-      },
-      swiperProgress: {
-        type: Number,
-        default: 0
       }
+      // swiperProgress: {
+      //   type: Number,
+      //   default: 0
+      // }
     },
     mounted() {
       if (this.items.length < 3) {
@@ -37,9 +39,8 @@
     },
     watch: {
       swiperProgress(newValue, oldValue) {
-        // this.indicator.style.left = (Number.parseFloat(this.indicator.style.width) * newValue) + 'px';
-        // this.indicator.offsetLeft = 50 + 'px';
-        // console.log(newValue);
+        console.log(newValue);
+        this.indicator.style.left = (Number.parseFloat(this.indicator.style.width) * newValue) + 'px';
       }
     },
     methods: {
@@ -50,7 +51,17 @@
     computed: {
       indicator() {
         return this.$refs.indicator;
-      }
+      },
+      /*
+       mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性。
+       https://vuex.vuejs.org/zh-cn/getters.html
+       使用对象展开运算符将 getter 混入 computed 对象中
+       想将一个 getter 属性另取一个名字，使用对象形式，这里不打算取其他名字，所以直接用数组了
+       【mapGetters下的字段都对应在在src/store/getters.js】
+      */
+      ...mapGetters([
+        'swiperProgress'
+      ])
     }
   };
 </script>
