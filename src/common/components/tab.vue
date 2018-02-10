@@ -46,7 +46,7 @@
         box-sizing: border-box;
         display: flex;
         flex-direction: row;
-        /*主轴对齐方式为左对齐*/
+        /*主轴对齐方式*/
         justify-content: flex-start;
         height: $tab_height;
         background: $main_color;

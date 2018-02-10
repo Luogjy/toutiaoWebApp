@@ -3,6 +3,7 @@
     <action-bar/>
     <tab/>
     <navigation-bar/>
+    <page-swiper/>
   </div>
 </template>
 
@@ -10,13 +11,11 @@
   import ActionBar from './common/components/action-bar';
   import Tab from './common/components/tab';
   import NavigationBar from './components/navigation-bar';
-  import 'swiper/dist/css/swiper.css';
-  // import {Swiper, SwiperSlide} from 'vue-awesome-swiper';
+  import PageSwiper from './common/components/page-swiper';
 
   export default {
     components: {
-      ActionBar, Tab, NavigationBar
-      // Swiper, SwiperSlide
+      ActionBar, Tab, NavigationBar, PageSwiper
     }
   };
 </script>
