@@ -2,14 +2,7 @@
   <section class="wrapper">
     <div class="tab-wrapper">
       <ul class="title-wrapper">
-        <li class="title">推荐</li>
-        <li class="title">热点</li>
-        <li class="title">视频</li>
-        <li class="title">社会</li>
-        <li class="title">娱乐</li>
-        <li class="title">科技</li>
-        <li class="title">汽车</li>
-        <li class="title">问答</li>
+        <li @click="clickItem(index)" class="title" :key="index" v-for="(item,index) in items">{{item.name}}</li>
       </ul>
     </div>
     <img class="add" src="../img/add.png">
@@ -19,7 +12,23 @@
 
 <script>
   export default {
-    name: 'tab'
+    props: {
+      items: {
+        type: Array,
+        default: function () {
+          return [];
+        }
+      },
+      SwiperProgress: {
+        type: Number,
+        default: 0
+      }
+    },
+    methods: {
+      clickItem(index) {
+        this.$emit('clickItem', index);
+      }
+    }
   };
 </script>
 

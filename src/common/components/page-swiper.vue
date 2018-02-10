@@ -1,6 +1,6 @@
 <template>
   <section class="my-wrapper">
-    <tab/>
+    <tab @clickItem="currentItem" :items="tabItems" :swiper-progress="SwiperProgress"/>
     <div ref="mySwiperWrapper" class="my-swiper-wrapper">
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide>
@@ -57,7 +57,17 @@
   export default {
     data() {
       return {
-        mySwiperFull: true,
+        tabItems: [
+          {name: '推荐'},
+          {name: '热点'},
+          {name: '视频'},
+          {name: '社会'},
+          {name: '娱乐'},
+          {name: '科技'},
+          {name: '汽车'},
+          {name: '问答'}
+        ],
+        SwiperProgress: 0,
         swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
           scrollbar: {
             el: '.swiper-scrollbar'
@@ -67,6 +77,7 @@
           on: {
             progress: function (progress) {
               console.log(progress);
+              this.SwiperProgress = progress;
             }
           }
         }
@@ -84,10 +95,12 @@
       }
     },
     mounted() {
-      // this.swiper.slideTo(3, 1000, false);
       this.resetSwiperSlideHeight();
     },
     methods: {
+      currentItem(index) {
+        this.swiper.slideTo(index, 400, false);
+      },
       // 重设swiper-slide标签的宽度
       resetSwiperSlideHeight() {
         setTimeout(() => {

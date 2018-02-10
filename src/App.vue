@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <action-bar/>
-    <tab/>
+    <!--<tab/>-->
     <navigation-bar/>
     <page-swiper/>
   </div>
