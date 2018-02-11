@@ -17,7 +17,11 @@
   export default {
     data() {
       return {
-        startX: 0
+        startX: 0,
+        currentTabMarginLeft: 0,
+        currentIndicatorLeft: 0,
+        initTabWrapperScrollWidth: 0,
+        lastTabItemFirstShow: false
         // tab_width: 55 // tab宽度
       };
     },
@@ -31,37 +35,42 @@
     },
     mounted() {
       // this.tabWrapper.scrollLeft = 200; // 横向滚动到
+      this.initTabWrapperScrollWidth = this.tabWrapper.scrollWidth;
     },
     watch: {
       swiperProgress(newValue, oldValue) { // 页面滑动进度变化时
         const count = this.items.length;
 
-        if (this.tabWrapper.scrollWidth <= this.tabWrapper.offsetWidth) { // 如果浏览器可显宽度装得下tab栏
-          this.indicator.style.left = (Number.parseFloat(this.indicator.offsetWidth) * newValue * (count - 1)) + 'px';
+        if (this.initTabWrapperScrollWidth <= this.tabWrapper.offsetWidth) { // 如果浏览器可显宽度装得下tab栏
+          this.indicator.style.left = (this.indicator.offsetWidth * newValue * (count - 1)) + 'px';
         } else { // 如果浏览器可显宽度装不下tab栏
-          if (count <= 3) { // 3个都装不下就先不管了
-            this.indicator.style.left = (Number.parseFloat(this.indicator.offsetWidth) * newValue * (count - 1)) + 'px';
+          if (count <= 3) { // 只有3个tab项就不管了，正常的手机应该都会够空间
+            this.indicator.style.left = (this.indicator.offsetWidth * newValue * (count - 1)) + 'px';
           } else {
-            // 指示器的位置
-            let indicatorLeft = (Number.parseFloat(this.indicator.offsetWidth) * newValue * (count - 1));
-            if (indicatorLeft >= this.indicator.offsetWidth * 1.5) {
-              indicatorLeft = this.indicator.offsetWidth * 1.5;
-            }
-            this.indicator.style.left = indicatorLeft + 'px';
+            let indicatorLeft = (this.indicator.offsetWidth * newValue * (count - 1)); // 指示器的计算位置
+            let tempIndicatorLeft = indicatorLeft;
 
-            // tab栏的位置
-            let tabMarginLeft = (-this.indicator.offsetWidth * (this.swiperActiveIndex - 1.5));
-            if (tabMarginLeft > 0) {
-              tabMarginLeft = 0;
+            if (Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth < this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
+              if (indicatorLeft >= this.indicator.offsetWidth * 1.5) {
+                indicatorLeft = this.indicator.offsetWidth * 1.5;
+              }
+              this.currentIndicatorLeft = indicatorLeft; // 存一下指示器的位置
+              this.indicator.style.left = this.currentIndicatorLeft + 'px';
+              this.currentTabMarginLeft = this.currentIndicatorLeft - tempIndicatorLeft; // 存一下tab栏的位置
+              this.titleWrapper.style.marginLeft = this.currentTabMarginLeft + 'px';
+              console.log('还没完全显示');
+              this.lastTabItemFirstShow = false;
+              console.log('indicatorLeft->' + this.currentIndicatorLeft);
+            } else { // 如果预计最后一个tab已经完全显示 todo
+              console.log('已经完全显示');
+              // if (this.lastTabItemFirstShow) {
+              console.log('indicatorLeft-0>' + this.currentIndicatorLeft);
+              this.currentIndicatorLeft = this.currentIndicatorLeft + ((Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth) - this.initTabWrapperScrollWidth);
+              // }
+              console.log('indicatorLeft-1>' + this.currentIndicatorLeft);
+              this.lastTabItemFirstShow = true;
+              this.indicator.style.left = this.currentIndicatorLeft + 'px';
             }
-            if (this.tabWrapper.scrollWidth + tabMarginLeft < this.tabWrapper.offsetWidth) { // todo tab栏
-              tabMarginLeft = -this.indicator.offsetWidth * 0.5;
-            }
-            this.titleWrapper.style.marginLeft = tabMarginLeft + 'px'; // tab栏动
-            console.log('Math.abs(tabMarginLeft)->' + Math.abs(tabMarginLeft));
-            console.log('this.tabWrapper.scrollWidth->' + this.tabWrapper.scrollWidth);
-            console.log('this.tabWrapper.offsetWidth->' + this.tabWrapper.offsetWidth);
-            console.log('---------------------------->' + (this.tabWrapper.scrollWidth - this.tabWrapper.offsetWidth));
           }
         }
       }

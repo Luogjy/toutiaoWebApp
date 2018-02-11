@@ -30,9 +30,14 @@
           {name: '社会'},
           {name: '娱乐'},
           {name: '科技'},
-          {name: '汽车'}
-          // {name: '问答'},
-          // {name: '问答2'}
+          {name: '汽车'},
+          {name: '问答'},
+          {name: '问答2'},
+          {name: '问答3'},
+          {name: '问答4'},
+          {name: '问答5'},
+          {name: '问答6'},
+          {name: '问答7'}
         ],
         swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
           scrollbar: {
@@ -47,7 +52,6 @@
             },
             slideChange: function () {
               that.setSwiperActiveIndex(this.activeIndex);
-              console.log('slideChange-' + this.activeIndex);
             }
           }
         }
