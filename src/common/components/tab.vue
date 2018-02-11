@@ -1,7 +1,7 @@
 <template>
   <section class="wrapper">
-    <div class="tab-wrapper">
-      <ul class="title-wrapper">
+    <div ref="tabWrapper" class="tab-wrapper" @touchstart="tabTouchStart" @touchmove="tabTouchMove">
+      <ul ref="titleWrapper" class="title-wrapper">
         <li @click="clickItem(index)" class="title" :key="index" v-for="(item,index) in items">{{item.name}}</li>
       </ul>
       <div v-show="items.length" ref="indicator" class="indicator"></div>
@@ -17,7 +17,8 @@
   export default {
     data() {
       return {
-        tab_width: 55 // tab宽度
+        startX: 0
+        // tab_width: 55 // tab宽度
       };
     },
     props: {
@@ -27,30 +28,82 @@
           return [];
         }
       }
-      // swiperProgress: {
-      //   type: Number,
-      //   default: 0
-      // }
     },
     mounted() {
-      if (this.items.length < 3) {
-        this.indicator.style.width = this.items.length * this.tab_width + 'px';
-      }
+      // this.tabWrapper.scrollLeft = 200; // 横向滚动到
     },
     watch: {
-      swiperProgress(newValue, oldValue) {
-        console.log(newValue);
-        this.indicator.style.left = (Number.parseFloat(this.indicator.style.width) * newValue) + 'px';
+      swiperProgress(newValue, oldValue) { // 页面滑动进度变化时
+        const count = this.items.length;
+
+        if (this.tabWrapper.scrollWidth <= this.tabWrapper.offsetWidth) { // 如果浏览器可显宽度装得下tab栏
+          this.indicator.style.left = (Number.parseFloat(this.indicator.offsetWidth) * newValue * (count - 1)) + 'px';
+        } else { // 如果浏览器可显宽度装不下tab栏
+          if (count <= 3) { // 3个都装不下就先不管了
+            this.indicator.style.left = (Number.parseFloat(this.indicator.offsetWidth) * newValue * (count - 1)) + 'px';
+          } else {
+            // 指示器的位置
+            let indicatorLeft = (Number.parseFloat(this.indicator.offsetWidth) * newValue * (count - 1));
+            if (indicatorLeft >= this.indicator.offsetWidth * 1.5) {
+              indicatorLeft = this.indicator.offsetWidth * 1.5;
+            }
+            this.indicator.style.left = indicatorLeft + 'px';
+
+            // tab栏的位置
+            let tabMarginLeft = (-this.indicator.offsetWidth * (this.swiperActiveIndex - 1.5));
+            if (tabMarginLeft > 0) {
+              tabMarginLeft = 0;
+            }
+            if (this.tabWrapper.scrollWidth + tabMarginLeft < this.tabWrapper.offsetWidth) { // todo tab栏
+              tabMarginLeft = -this.indicator.offsetWidth * 0.5;
+            }
+            this.titleWrapper.style.marginLeft = tabMarginLeft + 'px'; // tab栏动
+            console.log('Math.abs(tabMarginLeft)->' + Math.abs(tabMarginLeft));
+            console.log('this.tabWrapper.scrollWidth->' + this.tabWrapper.scrollWidth);
+            console.log('this.tabWrapper.offsetWidth->' + this.tabWrapper.offsetWidth);
+            console.log('---------------------------->' + (this.tabWrapper.scrollWidth - this.tabWrapper.offsetWidth));
+          }
+        }
       }
     },
     methods: {
       clickItem(index) {
         this.$emit('clickItem', index);
+      },
+      tabTouchStart(e) {
+        const touch = e.touches[0];
+        this.startX = touch.pageX;
+      },
+      tabTouchMove(e) { // 在这里向右滚动tab栏是修正MarginLeft
+        e.stopImmediatePropagation(); // 阻止冒泡，不然对应滑动前进后退的浏览器容易误操作
+        const touch = e.touches[0];
+        const deltaX = touch.pageX - this.startX; // 偏移(负值为手指往左划)
+        this.startX = touch.pageX;
+
+        if (deltaX > 0) { // 手指往右划
+          let tabMarginLeft = Number.parseFloat(this.titleWrapper.style.marginLeft) + deltaX;
+          let indicatorLeft = Number.parseFloat(this.indicator.style.left) + deltaX;
+          if (tabMarginLeft > 0) {
+            tabMarginLeft = 0;
+            indicatorLeft = this.swiperActiveIndex * this.indicator.offsetWidth;
+          }
+          this.titleWrapper.style.marginLeft = tabMarginLeft + 'px';
+          this.indicator.style.left = indicatorLeft + 'px';
+        }
       }
     },
     computed: {
       indicator() {
         return this.$refs.indicator;
+      },
+      tabWrapper() {
+        return this.$refs.tabWrapper;
+      },
+      titleWrapper() {
+        return this.$refs.titleWrapper;
+      },
+      wrapperLeftContent() {
+        return this.$refs.wrapperLeftContent;
       },
       /*
        mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性。
@@ -60,7 +113,8 @@
        【mapGetters下的字段都对应在在src/store/getters.js】
       */
       ...mapGetters([
-        'swiperProgress'
+        'swiperProgress', // 进度
+        'swiperActiveIndex' // 当前索引
       ])
     }
   };

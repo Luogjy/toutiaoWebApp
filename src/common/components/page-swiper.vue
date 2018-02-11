@@ -25,13 +25,14 @@
       return {
         tabItems: [
           {name: '推荐'},
-          {name: '热点'}
-          // {name: '视频'},
-          // {name: '社会'},
-          // {name: '娱乐'},
-          // {name: '科技'},
-          // {name: '汽车'},
-          // {name: '问答'}
+          {name: '热点'},
+          {name: '视频'},
+          {name: '社会'},
+          {name: '娱乐'},
+          {name: '科技'},
+          {name: '汽车'}
+          // {name: '问答'},
+          // {name: '问答2'}
         ],
         swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
           scrollbar: {
@@ -43,6 +44,10 @@
             progress: function (progress) {
               // that.swiperProgress = progress; // 本来想这么给子组件属性传值的，但频率太高。父组件给子组件通过属性传递值时，太频繁会导致卡顿
               that.setSwiperProgress(progress);
+            },
+            slideChange: function () {
+              that.setSwiperActiveIndex(this.activeIndex);
+              console.log('slideChange-' + this.activeIndex);
             }
           }
         }
@@ -67,7 +72,7 @@
     },
     methods: {
       currentItem(index) {
-        this.swiper.slideTo(index, 400, false);
+        this.swiper.slideTo(index, 150, false);
       },
       // 重设swiper-slide标签的宽度
       resetSwiperSlideHeight() {
@@ -86,7 +91,8 @@
         【mapMutations放在methods下】
      */
       ...mapMutations({
-        setSwiperProgress: 'SWIPER_PROGRESS'
+        setSwiperProgress: 'SWIPER_PROGRESS',
+        setSwiperActiveIndex: 'SWIPER_ACTIVE_INDEX'
       })
     },
     components: {

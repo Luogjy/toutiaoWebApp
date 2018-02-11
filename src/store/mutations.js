@@ -3,7 +3,11 @@ import * as types from './mutationTypes';
 const mutations = {
   [types.SWIPER_PROGRESS](state, swiperProgress) {
     state.swiperProgress = swiperProgress;
+  },
+  [types.SWIPER_ACTIVE_INDEX](state, swiperActiveIndex) {
+    state.swiperActiveIndex = swiperActiveIndex;
   }
+
 };
 export default mutations;
 /**
