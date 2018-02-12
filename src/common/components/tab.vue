@@ -20,9 +20,11 @@
         startX: 0,
         currentTabMarginLeft: 0,
         currentIndicatorLeft: 0,
+        initTabWrapperOffsetWidth: 0,
         initTabWrapperScrollWidth: 0,
         initIndicatorOffsetWidth: 0,
-        temporaryFixedIndicatorLeft: 0 // 页面切换都一定程度时，指示器的暂时固定位置
+        temporaryFixedIndicatorLeft: 0, // 页面切换都一定程度时，指示器的暂时固定位置
+        touchMoveTabMarginLeft: 0
         // tab_width: 55 // tab宽度
       };
     },
@@ -35,32 +37,38 @@
       }
     },
     mounted() {
-      // this.tabWrapper.scrollLeft = 200; // 横向滚动到
       this.initTabWrapperScrollWidth = this.tabWrapper.scrollWidth;
-      this.initIndicatorOffsetWidth = this.indicator.offsetWidth; // 移动的过程中宽度竟然会偶然突变的
+      this.initTabWrapperOffsetWidth = this.tabWrapper.offsetWidth;
+      this.initIndicatorOffsetWidth = this.indicator.offsetWidth; // 移动的过程中宽度竟然会偶然突变的，所有还是记录一个初始值比较靠谱
       this.temporaryFixedIndicatorLeft = this.initIndicatorOffsetWidth * 1.5;
     },
     watch: {
       swiperProgress(newValue, oldValue) { // 页面滑动进度变化时
         const count = this.items.length;
 
-        if (this.initTabWrapperScrollWidth <= this.tabWrapper.offsetWidth) { // 如果浏览器可显宽度装得下tab栏
+        if (this.initTabWrapperScrollWidth <= this.initTabWrapperOffsetWidth) { // 如果浏览器可显宽度装得下tab栏
           this.indicator.style.left = (this.initIndicatorOffsetWidth * newValue * (count - 1)) + 'px';
-          console.log('11111111111111111111111');
         } else { // 如果浏览器可显宽度装不下tab栏
           if (count <= 3) { // 只有3个tab项就不管了，正常的手机应该都会够空间
             this.indicator.style.left = (this.initIndicatorOffsetWidth * newValue * (count - 1)) + 'px';
-            console.log('222222222222222222222222222');
           } else {
             let indicatorLeft = (this.initIndicatorOffsetWidth * newValue * (count - 1)); // 指示器的计算位置
             let tempIndicatorLeft = indicatorLeft;
 
-            if (Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth <= this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
+            if (Math.abs(this.currentTabMarginLeft) + this.initTabWrapperOffsetWidth <= this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
               if (indicatorLeft >= this.temporaryFixedIndicatorLeft) {
                 indicatorLeft = this.temporaryFixedIndicatorLeft;
               }
               this.currentIndicatorLeft = indicatorLeft; // 存一下指示器的位置
               this.indicator.style.left = this.currentIndicatorLeft + 'px';
+
+              if (this.touchMoveTabMarginLeft !== 0) { // 修正一下手动划动过tab栏时的位置
+                console.log('进来了');
+                this.touchMoveTabMarginLeft = 0;
+                this.tabWrapper.scrollLeft = 0; // 横向滚动到
+                // this.titleWrapper.style.marginLeft = 0 + 'px';
+              }
+
               this.currentTabMarginLeft = this.currentIndicatorLeft - tempIndicatorLeft; // 存一下tab栏的位置
               this.titleWrapper.style.marginLeft = this.currentTabMarginLeft + 'px';
               console.log('还没完全显示');
@@ -92,8 +100,11 @@
         const deltaX = touch.pageX - this.startX; // 偏移(负值为手指往左划)
         this.startX = touch.pageX;
 
+        let titleWrapperMarginLeft = this.titleWrapper.style.marginLeft ? this.titleWrapper.style.marginLeft : 0;
+        let tabMarginLeft = Number.parseFloat(titleWrapperMarginLeft) + deltaX;
+        this.touchMoveTabMarginLeft = this.touchMoveTabMarginLeft + tabMarginLeft;
+
         if (deltaX > 0) { // 手指往右划
-          let tabMarginLeft = Number.parseFloat(this.titleWrapper.style.marginLeft) + deltaX;
           let indicatorLeft = Number.parseFloat(this.indicator.style.left) + deltaX;
           if (tabMarginLeft > 0) {
             tabMarginLeft = 0;
@@ -113,9 +124,6 @@
       },
       titleWrapper() {
         return this.$refs.titleWrapper;
-      },
-      wrapperLeftContent() {
-        return this.$refs.wrapperLeftContent;
       },
       /*
        mapGetters 辅助函数仅仅是将 store 中的 getter 映射到局部计算属性。
@@ -189,7 +197,7 @@
         top: 34px;
         left: 0;
         /* margin-top: -68px; */
-        border-bottom: 2px solid #C80000;
+        border-bottom: 2px solid #E9DADA;
       }
     }
 
