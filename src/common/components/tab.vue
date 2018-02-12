@@ -43,14 +43,16 @@
 
         if (this.initTabWrapperScrollWidth <= this.tabWrapper.offsetWidth) { // 如果浏览器可显宽度装得下tab栏
           this.indicator.style.left = (this.indicator.offsetWidth * newValue * (count - 1)) + 'px';
+          console.log('11111111111111111111111')
         } else { // 如果浏览器可显宽度装不下tab栏
           if (count <= 3) { // 只有3个tab项就不管了，正常的手机应该都会够空间
             this.indicator.style.left = (this.indicator.offsetWidth * newValue * (count - 1)) + 'px';
+            console.log('222222222222222222222222222')
           } else {
             let indicatorLeft = (this.indicator.offsetWidth * newValue * (count - 1)); // 指示器的计算位置
             let tempIndicatorLeft = indicatorLeft;
 
-            if (Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth < this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
+            if (Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth <= this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
               if (indicatorLeft >= this.indicator.offsetWidth * 1.5) {
                 indicatorLeft = this.indicator.offsetWidth * 1.5;
               }
@@ -61,7 +63,8 @@
               console.log('还没完全显示');
               this.lastTabItemFirstShow = false;
               console.log('indicatorLeft->' + this.currentIndicatorLeft);
-            } else { // 如果预计最后一个tab已经完全显示 todo
+              console.log('333333333333333333333333')
+            } else { // 如果预计最后一个tab已经完全显示
               console.log('已经完全显示');
               // if (this.lastTabItemFirstShow) {
               console.log('indicatorLeft-0>' + this.currentIndicatorLeft);
@@ -70,6 +73,7 @@
               console.log('indicatorLeft-1>' + this.currentIndicatorLeft);
               this.lastTabItemFirstShow = true;
               this.indicator.style.left = this.currentIndicatorLeft + 'px';
+              console.log('4444444444444444444444444')
             }
           }
         }
@@ -98,6 +102,7 @@
           }
           this.titleWrapper.style.marginLeft = tabMarginLeft + 'px';
           this.indicator.style.left = indicatorLeft + 'px';
+          console.log('55555555555555555555555555')
         }
       }
     },
@@ -137,10 +142,12 @@
   $tab_width: 55px;
 
   .wrapper {
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
 
     .tab-wrapper {
+      box-sizing: border-box;
       /*对剩余空间进行划分。可以小数。*/
       flex-grow: 1;
       height: $tab_height;
