@@ -21,7 +21,7 @@
         currentTabMarginLeft: 0,
         currentIndicatorLeft: 0,
         initTabWrapperScrollWidth: 0,
-        lastTabItemFirstShow: false
+        initIndicatorOffsetWidth: 0
         // tab_width: 55 // tab宽度
       };
     },
@@ -36,44 +36,43 @@
     mounted() {
       // this.tabWrapper.scrollLeft = 200; // 横向滚动到
       this.initTabWrapperScrollWidth = this.tabWrapper.scrollWidth;
+      this.initIndicatorOffsetWidth = this.indicator.offsetWidth; // 移动的过程中宽度竟然会偶然突变的
     },
     watch: {
       swiperProgress(newValue, oldValue) { // 页面滑动进度变化时
         const count = this.items.length;
 
         if (this.initTabWrapperScrollWidth <= this.tabWrapper.offsetWidth) { // 如果浏览器可显宽度装得下tab栏
-          this.indicator.style.left = (this.indicator.offsetWidth * newValue * (count - 1)) + 'px';
-          console.log('11111111111111111111111')
+          this.indicator.style.left = (this.initIndicatorOffsetWidth * newValue * (count - 1)) + 'px';
+          console.log('11111111111111111111111');
         } else { // 如果浏览器可显宽度装不下tab栏
           if (count <= 3) { // 只有3个tab项就不管了，正常的手机应该都会够空间
-            this.indicator.style.left = (this.indicator.offsetWidth * newValue * (count - 1)) + 'px';
-            console.log('222222222222222222222222222')
+            this.indicator.style.left = (this.initIndicatorOffsetWidth * newValue * (count - 1)) + 'px';
+            console.log('222222222222222222222222222');
           } else {
-            let indicatorLeft = (this.indicator.offsetWidth * newValue * (count - 1)); // 指示器的计算位置
+            let indicatorLeft = (this.initIndicatorOffsetWidth * newValue * (count - 1)); // 指示器的计算位置
             let tempIndicatorLeft = indicatorLeft;
 
             if (Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth <= this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
-              if (indicatorLeft >= this.indicator.offsetWidth * 1.5) {
-                indicatorLeft = this.indicator.offsetWidth * 1.5;
+              if (indicatorLeft >= this.initIndicatorOffsetWidth * 1.5) {
+                indicatorLeft = this.initIndicatorOffsetWidth * 1.5;
               }
               this.currentIndicatorLeft = indicatorLeft; // 存一下指示器的位置
               this.indicator.style.left = this.currentIndicatorLeft + 'px';
               this.currentTabMarginLeft = this.currentIndicatorLeft - tempIndicatorLeft; // 存一下tab栏的位置
               this.titleWrapper.style.marginLeft = this.currentTabMarginLeft + 'px';
               console.log('还没完全显示');
-              this.lastTabItemFirstShow = false;
-              console.log('indicatorLeft->' + this.currentIndicatorLeft);
-              console.log('333333333333333333333333')
             } else { // 如果预计最后一个tab已经完全显示
               console.log('已经完全显示');
-              // if (this.lastTabItemFirstShow) {
-              console.log('indicatorLeft-0>' + this.currentIndicatorLeft);
-              this.currentIndicatorLeft = this.currentIndicatorLeft + ((Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth) - this.initTabWrapperScrollWidth);
+              console.log('newValue->' + newValue);
+              console.log('tempIndicatorLeft->' + tempIndicatorLeft);
+              console.log('offsetWidth->' + this.indicator.offsetWidth);
+              this.currentIndicatorLeft = this.initIndicatorOffsetWidth * 1.5 + (tempIndicatorLeft - (Math.abs(this.currentTabMarginLeft) + this.initIndicatorOffsetWidth * 1.5));
+              console.log(this.currentIndicatorLeft);
+              // if (this.currentPageIndex === this.swiperActiveIndex) {
+              //   this.currentIndicatorLeft = this.currentIndicatorLeft + ((Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth) - this.initTabWrapperScrollWidth);
               // }
-              console.log('indicatorLeft-1>' + this.currentIndicatorLeft);
-              this.lastTabItemFirstShow = true;
               this.indicator.style.left = this.currentIndicatorLeft + 'px';
-              console.log('4444444444444444444444444')
             }
           }
         }
@@ -98,11 +97,11 @@
           let indicatorLeft = Number.parseFloat(this.indicator.style.left) + deltaX;
           if (tabMarginLeft > 0) {
             tabMarginLeft = 0;
-            indicatorLeft = this.swiperActiveIndex * this.indicator.offsetWidth;
+            indicatorLeft = this.swiperActiveIndex * this.initIndicatorOffsetWidth;
           }
           this.titleWrapper.style.marginLeft = tabMarginLeft + 'px';
           this.indicator.style.left = indicatorLeft + 'px';
-          console.log('55555555555555555555555555')
+          console.log('55555555555555555555555555');
         }
       }
     },
