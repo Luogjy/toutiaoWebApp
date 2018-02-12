@@ -43,6 +43,7 @@
           scrollbar: {
             el: '.swiper-scrollbar'
           },
+          speed: 150, // 划动时的切换速度，默认300毫秒
           // autoHeight: true, // wrapper和container会随着当前slide的高度而发生变化
           watchSlidesProgress: true,
           on: {

@@ -21,7 +21,8 @@
         currentTabMarginLeft: 0,
         currentIndicatorLeft: 0,
         initTabWrapperScrollWidth: 0,
-        initIndicatorOffsetWidth: 0
+        initIndicatorOffsetWidth: 0,
+        temporaryFixedIndicatorLeft: 0 // 页面切换都一定程度时，指示器的暂时固定位置
         // tab_width: 55 // tab宽度
       };
     },
@@ -37,6 +38,7 @@
       // this.tabWrapper.scrollLeft = 200; // 横向滚动到
       this.initTabWrapperScrollWidth = this.tabWrapper.scrollWidth;
       this.initIndicatorOffsetWidth = this.indicator.offsetWidth; // 移动的过程中宽度竟然会偶然突变的
+      this.temporaryFixedIndicatorLeft = this.initIndicatorOffsetWidth * 1.5;
     },
     watch: {
       swiperProgress(newValue, oldValue) { // 页面滑动进度变化时
@@ -54,8 +56,8 @@
             let tempIndicatorLeft = indicatorLeft;
 
             if (Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth <= this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
-              if (indicatorLeft >= this.initIndicatorOffsetWidth * 1.5) {
-                indicatorLeft = this.initIndicatorOffsetWidth * 1.5;
+              if (indicatorLeft >= this.temporaryFixedIndicatorLeft) {
+                indicatorLeft = this.temporaryFixedIndicatorLeft;
               }
               this.currentIndicatorLeft = indicatorLeft; // 存一下指示器的位置
               this.indicator.style.left = this.currentIndicatorLeft + 'px';
@@ -64,15 +66,13 @@
               console.log('还没完全显示');
             } else { // 如果预计最后一个tab已经完全显示
               console.log('已经完全显示');
-              console.log('newValue->' + newValue);
-              console.log('tempIndicatorLeft->' + tempIndicatorLeft);
-              console.log('offsetWidth->' + this.indicator.offsetWidth);
-              this.currentIndicatorLeft = this.initIndicatorOffsetWidth * 1.5 + (tempIndicatorLeft - (Math.abs(this.currentTabMarginLeft) + this.initIndicatorOffsetWidth * 1.5));
-              console.log(this.currentIndicatorLeft);
-              // if (this.currentPageIndex === this.swiperActiveIndex) {
-              //   this.currentIndicatorLeft = this.currentIndicatorLeft + ((Math.abs(this.currentTabMarginLeft) + this.tabWrapper.offsetWidth) - this.initTabWrapperScrollWidth);
-              // }
+              this.currentIndicatorLeft = this.temporaryFixedIndicatorLeft + (tempIndicatorLeft - (Math.abs(this.currentTabMarginLeft) + this.temporaryFixedIndicatorLeft));
               this.indicator.style.left = this.currentIndicatorLeft + 'px';
+
+              if (this.currentIndicatorLeft <= this.temporaryFixedIndicatorLeft) {
+                this.currentTabMarginLeft = this.currentTabMarginLeft + (this.temporaryFixedIndicatorLeft - this.currentIndicatorLeft);
+              }
+              this.titleWrapper.style.marginLeft = this.currentTabMarginLeft + 'px';
             }
           }
         }
@@ -101,7 +101,6 @@
           }
           this.titleWrapper.style.marginLeft = tabMarginLeft + 'px';
           this.indicator.style.left = indicatorLeft + 'px';
-          console.log('55555555555555555555555555');
         }
       }
     },
