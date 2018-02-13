@@ -27,7 +27,6 @@
         temporaryFixedIndicatorLeft: 0,
         // 手指划动tab栏的距离
         touchMoveTabMarginLeft: 0
-        // tab_width: 55 // tab宽度
       };
     },
     props: {
@@ -46,7 +45,6 @@
     },
     watch: {
       swiperProgress(newValue, oldValue) { // 页面滑动进度变化时
-        console.log(newValue);
         const count = this.items.length;
 
         if (this.initTabWrapperScrollWidth <= this.initTabWrapperOffsetWidth) { // 如果浏览器可显宽度装得下tab栏
@@ -58,25 +56,30 @@
             let indicatorLeft = (this.initIndicatorOffsetWidth * newValue * (count - 1)); // 指示器的计算位置
             let tempIndicatorLeft = indicatorLeft;
 
-            if (Math.abs(this.currentTabMarginLeft) + this.initTabWrapperOffsetWidth <= this.initTabWrapperScrollWidth) { // 如果预计最后一个tab还没完全显示
-              if (indicatorLeft >= this.temporaryFixedIndicatorLeft) {
+            if (Math.abs(this.currentTabMarginLeft) + this.initTabWrapperOffsetWidth <= this.initTabWrapperScrollWidth) { // 页面滑动进度变化时，如果预计最后一个tab还没完全显示
+              if (indicatorLeft >= this.temporaryFixedIndicatorLeft) { // 111222
                 indicatorLeft = this.temporaryFixedIndicatorLeft;
               }
-              this.currentIndicatorLeft = indicatorLeft; // 存一下指示器的位置
-              this.indicator.style.left = this.currentIndicatorLeft + 'px';
+
+              let tabMarginLeft = indicatorLeft - tempIndicatorLeft;
+
+              if (Math.abs(tabMarginLeft) + this.initTabWrapperOffsetWidth > this.initTabWrapperScrollWidth) { // 修正例如拖动tab到末尾而页面还在第一页时点击tab切换页面 或者 在tab从运动到不能运动由于拖动过快 等 导致tab栏过度运动
+                tabMarginLeft = this.initTabWrapperOffsetWidth - this.initTabWrapperScrollWidth;
+                indicatorLeft = this.temporaryFixedIndicatorLeft +
+                  (tempIndicatorLeft - (Math.abs(tabMarginLeft) + this.temporaryFixedIndicatorLeft)); // 完全显示的话tab就不能运动了，那就让指示器就要代替它运动
+              }
 
               if (this.touchMoveTabMarginLeft !== 0) { // 修正一下手动划动过tab栏时的位置
-                console.log('进来了');
                 this.touchMoveTabMarginLeft = 0;
                 this.tabWrapper.scrollLeft = 0; // 横向滚动到0
                 // this.titleWrapper.style.marginLeft = 0 + 'px';
               }
 
-              this.currentTabMarginLeft = this.currentIndicatorLeft - tempIndicatorLeft; // 存一下tab栏的位置
+              this.currentIndicatorLeft = indicatorLeft; // 存一下指示器的位置
+              this.currentTabMarginLeft = tabMarginLeft; // 存一下tab栏的位置
+              this.indicator.style.left = this.currentIndicatorLeft + 'px';
               this.titleWrapper.style.marginLeft = this.currentTabMarginLeft + 'px';
-              console.log('还没完全显示');
-            } else { // 如果预计最后一个tab已经完全显示
-              console.log('已经完全显示');
+            } else { // 页面滑动进度变化时，如果预计最后一个tab已经完全显示
               this.currentIndicatorLeft = this.temporaryFixedIndicatorLeft +
                 (tempIndicatorLeft - (Math.abs(this.currentTabMarginLeft) + this.temporaryFixedIndicatorLeft)); // 完全显示的话tab就不能运动了，那就让指示器就要代替它运动
               this.indicator.style.left = this.currentIndicatorLeft + 'px';
