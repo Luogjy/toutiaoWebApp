@@ -1,24 +1,48 @@
 <template>
-  <div id="app">
+  <div ref="wrapper" class="wrapper" id="app">
     <action-bar/>
-    <!--<tab/>-->
-    <navigation-bar/>
-    <page-swiper/>
+    <div class="main-body">
+      <page-swiper/>
+    </div>
+    <navigation-bar class="nav-bar"/>
   </div>
 </template>
 
 <script>
   import ActionBar from './common/components/action-bar';
-  import Tab from './common/components/tab';
   import NavigationBar from './components/navigation-bar';
   import PageSwiper from './common/components/page-swiper';
 
   export default {
+    data() {
+      return {
+        myWrapperHeight: 0
+      };
+    },
+    mounted() {
+      // console.log(this.$refs.wrapper.clientHeight);
+      // this.myWrapperHeight = window.screen.availHeight;
+      console.log(window.screen.availHeight);
+    },
     components: {
-      ActionBar, Tab, NavigationBar, PageSwiper
+      ActionBar, NavigationBar, PageSwiper
     }
   };
 </script>
 
-<style>
+<style scoped lang="scss">
+  @import "./common/css/size";
+
+  .wrapper {
+    width: 100%;
+    .main-body {
+      width: 100%;
+      background: purple;
+    }
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+    }
+  }
+
 </style>

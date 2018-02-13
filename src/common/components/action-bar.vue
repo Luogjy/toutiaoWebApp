@@ -66,23 +66,23 @@
 
 <style scoped lang="scss">
   @import "../css/color";
+  @import "../css/size";
 
-  $bar_height: 36px;
   $img_width: 20px;
   @mixin wrapper {
     display: inline-block;
-    height: $bar_height;
+    height: $action_bar_height;
   }
 
   @mixin img {
     width: $img_width;
-    margin-top: ($bar_height - $img_width)/2;
+    margin-top: ($action_bar_height - $img_width)/2;
   }
 
   .bar-wrapper {
     box-sizing: border-box;
     background: $main_color;
-    height: $bar_height;
+    height: $action_bar_height;
     position: relative;
 
     .back-wrapper {
@@ -95,7 +95,7 @@
     }
 
     .title {
-      line-height: $bar_height;
+      line-height: $action_bar_height;
       margin-left: 10px;
       float: left;
       color: $textColor_white;

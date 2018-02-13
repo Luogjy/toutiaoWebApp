@@ -1,5 +1,5 @@
 <template>
-  <section class="my-wrapper">
+  <section ref="myWrapper" class="my-wrapper">
     <tab @clickItem="currentItem" :items="tabItems"/>
     <div ref="mySwiperWrapper" class="my-swiper-wrapper">
       <swiper :options="swiperOption" ref="mySwiper">
@@ -21,6 +21,12 @@
 
   let that;
   export default {
+    props: {
+      myWrapperHeight: {
+        type: Number,
+        default: 300
+      }
+    },
     data() {
       return {
         tabItems: [
@@ -70,9 +76,14 @@
       },
       slideContent() {
         return this.$refs.mySlideContent;
+      },
+      myWrapper() {
+        return this.$refs.myWrapper;
       }
     },
     mounted() {
+      // this.$refs.myWrapper.style.height = this.myWrapperHeight + 'px';
+      this.$refs.myWrapper.style.height = this.myWrapperHeight + 'px';
       this.resetSwiperSlideHeight();
     },
     methods: {

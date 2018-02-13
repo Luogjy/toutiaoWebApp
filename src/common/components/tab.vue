@@ -150,8 +150,8 @@
 
 <style scoped lang="scss">
   @import "../css/color";
+  @import "../css/size";
 
-  $tab_height: 36px;
   /*tab宽度*/
   $tab_width: 55px;
 
