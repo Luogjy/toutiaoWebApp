@@ -1,10 +1,19 @@
 <template>
   <div ref="wrapper" class="wrapper" id="app">
-    <action-bar/>
+    <action-bar ref="actionBar"/>
+
     <div class="main-body">
-      <page-swiper/>
+      <!--
+        keep-alive 包裹动态组件时，会缓存不活动的组件实例，而不是销毁它们。
+        主要用于保留组件状态或避免重新渲染。这样可以避免每次加载这个组件都重新请求接口加载数据。
+        用在其一个直属的子组件被开关的情形。如果你在其中有 v-for 则不会工作。
+      -->
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
     </div>
-    <navigation-bar class="nav-bar"/>
+
+    <navigation-bar ref="navBar" class="nav-bar"/>
   </div>
 </template>
 
@@ -16,13 +25,19 @@
   export default {
     data() {
       return {
-        myWrapperHeight: 0
+        // myWrapperHeight: 100
       };
     },
+    computed: {
+      actionBar() {
+        return this.$refs.actionBar.$el;
+      },
+      navBar() {
+        return this.$refs.navBar.$el;
+      }
+    },
     mounted() {
-      // console.log(this.$refs.wrapper.clientHeight);
-      // this.myWrapperHeight = window.screen.availHeight;
-      console.log(window.screen.availHeight);
+      // this.myWrapperHeight = window.screen.availHeight - this.actionBar.offsetHeight - this.navBar.offsetHeight;
     },
     components: {
       ActionBar, NavigationBar, PageSwiper
@@ -31,8 +46,6 @@
 </script>
 
 <style scoped lang="scss">
-  @import "./common/css/size";
-
   .wrapper {
     width: 100%;
     .main-body {

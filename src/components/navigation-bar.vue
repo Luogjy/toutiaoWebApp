@@ -48,6 +48,7 @@
         this.pictureActive = false;
         this.videoActive = false;
         this.toutiaouserActive = false;
+        this.$router.push('/news')
       },
       picture() {
         this.$emit('clickPicture');
@@ -59,6 +60,7 @@
         this.pictureActive = true;
         this.videoActive = false;
         this.toutiaouserActive = false;
+        this.$router.push('/picture')
       },
       video() {
         this.$emit('clickVideo');
@@ -70,6 +72,7 @@
         this.pictureActive = false;
         this.videoActive = true;
         this.toutiaouserActive = false;
+        this.$router.push('/video')
       },
       toutiaouser() {
         this.$emit('clickToutiaouser');
@@ -81,6 +84,7 @@
         this.pictureActive = false;
         this.videoActive = false;
         this.toutiaouserActive = true;
+        this.$router.push('/toutiaouser')
       }
 
     }

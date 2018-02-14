@@ -1,9 +1,9 @@
 <template>
   <section ref="myWrapper" class="my-wrapper">
-    <tab @clickItem="currentItem" :items="tabItems"/>
+    <tab @clickItem="currentItem" :items="items"/>
     <div ref="mySwiperWrapper" class="my-swiper-wrapper">
       <swiper :options="swiperOption" ref="mySwiper">
-        <swiper-slide :key="index" v-for="(item,index) in tabItems">
+        <swiper-slide :key="index" v-for="(item,index) in items">
           <div class="my-slide-content">
             {{item.name}}
           </div>
@@ -25,26 +25,16 @@
       myWrapperHeight: {
         type: Number,
         default: 300
+      },
+      items: {
+        type: Array,
+        default: function () {
+          return [];
+        }
       }
     },
     data() {
       return {
-        tabItems: [
-          {name: '推荐'},
-          {name: '热点'},
-          {name: '视频'},
-          {name: '社会'},
-          {name: '娱乐'},
-          {name: '科技'},
-          {name: '汽车'},
-          {name: '问答'},
-          {name: '问答2'},
-          {name: '问答3'},
-          {name: '问答4'},
-          {name: '问答5'},
-          {name: '问答6'},
-          {name: '问答7'}
-        ],
         swiperOption: { // vue-awesome-swiper所有参数都写这里，所有的参数同 swiper 官方 api 参数
           scrollbar: {
             el: '.swiper-scrollbar'
@@ -82,9 +72,12 @@
       }
     },
     mounted() {
-      // this.$refs.myWrapper.style.height = this.myWrapperHeight + 'px';
-      this.$refs.myWrapper.style.height = this.myWrapperHeight + 'px';
       this.resetSwiperSlideHeight();
+    },
+    watch: {
+      myWrapperHeight(newValue) {
+        this.$refs.myWrapper.style.height = newValue + 'px';
+      }
     },
     methods: {
       currentItem(index) {
@@ -99,7 +92,7 @@
               this.swiper.el.children[0].children[0].children[0].style.height = this.swiperWrapper.offsetHeight/* 实际高度 */ + 'px';
             }
           }
-        }, 200);
+        }, 20);
       },
       /*
         https://vuex.vuejs.org/zh-cn/mutations.html
