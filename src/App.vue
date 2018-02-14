@@ -21,11 +21,13 @@
   import ActionBar from './common/components/action-bar';
   import NavigationBar from './components/navigation-bar';
   import PageSwiper from './common/components/page-swiper';
+  import {mapMutations} from 'vuex';
 
   export default {
     data() {
       return {
         // myWrapperHeight: 100
+        initActionBarOffsetHeight: 0
       };
     },
     computed: {
@@ -34,10 +36,26 @@
       },
       navBar() {
         return this.$refs.navBar.$el;
+      },
+      wrapper() {
+        return this.$refs.wrapper;
       }
     },
     mounted() {
+      this.initActionBarOffsetHeight = this.actionBar.offsetHeight;
+      this.$nextTick(function () {
+        window.addEventListener('scroll', this.onScroll);
+      });
       // this.myWrapperHeight = window.screen.availHeight - this.actionBar.offsetHeight - this.navBar.offsetHeight;
+    },
+    methods: {
+      onScroll() {
+        let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        this.setDocumentScrollTop({documentScrollTop: scrollTop, actionBarHeight: this.initActionBarOffsetHeight});
+      },
+      ...mapMutations({
+        setDocumentScrollTop: 'DOCUMENT_SCROLL_TOP'
+      })
     },
     components: {
       ActionBar, NavigationBar, PageSwiper
@@ -46,15 +64,18 @@
 </script>
 
 <style scoped lang="scss">
+  @import "./common/css/color";
+
   .wrapper {
     width: 100%;
     .main-body {
       width: 100%;
-      background: purple;
+      background: $pageSwiper_bgColor;
     }
     .nav-bar {
       position: fixed;
       bottom: 0;
+      z-index: 1;
     }
   }
 

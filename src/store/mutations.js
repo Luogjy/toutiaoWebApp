@@ -6,6 +6,9 @@ const mutations = {
   },
   [types.SWIPER_ACTIVE_INDEX](state, swiperActiveIndex) {
     state.swiperActiveIndex = swiperActiveIndex;
+  },
+  [types.DOCUMENT_SCROLL_TOP](state, {documentScrollTop, actionBarHeight}) {
+    state.documentScrollTop = {documentScrollTop, actionBarHeight};
   }
 
 };

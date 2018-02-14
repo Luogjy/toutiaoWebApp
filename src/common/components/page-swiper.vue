@@ -1,11 +1,64 @@
 <template>
   <section ref="myWrapper" class="my-wrapper">
-    <tab @clickItem="currentItem" :items="items"/>
-    <div ref="mySwiperWrapper" class="my-swiper-wrapper">
+    <tab ref="tab" @clickItem="currentItem" :items="items" class="tab" :class="tabFixed"/>
+    <div ref="mySwiperWrapper" class="my-swiper-wrapper" :class="mySwiperWrapperMarginTop">
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide :key="index" v-for="(item,index) in items">
           <div class="my-slide-content">
-            {{item.name}}
+            <div>{{item.name}}</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>啦啦啦啦啦</div>
+            <div>到底了</div>
           </div>
         </swiper-slide>
       </swiper>
@@ -17,7 +70,7 @@
   import Tab from './tab';
   import 'swiper/dist/css/swiper.css'; // vue-awesome-swiper的样式表
   import {swiper, swiperSlide} from 'vue-awesome-swiper';
-  import {mapMutations} from 'vuex';
+  import {mapMutations, mapGetters} from 'vuex';
 
   let that;
   export default {
@@ -51,7 +104,8 @@
               that.setSwiperActiveIndex(this.activeIndex);
             }
           }
-        }
+        },
+        toFixedTab: false
       };
     },
     created() {
@@ -69,7 +123,17 @@
       },
       myWrapper() {
         return this.$refs.myWrapper;
-      }
+      },
+      tab() {
+        return this.$refs.tab.$el;
+      },
+      tabFixed() {
+        return this.toFixedTab ? 'tab-fixed' : '';
+      },
+      mySwiperWrapperMarginTop() {
+        return this.toFixedTab ? 'my-swiper-wrapper-marginTop' : '';
+      },
+      ...mapGetters(['documentScrollTop'])
     },
     mounted() {
       this.resetSwiperSlideHeight();
@@ -77,6 +141,9 @@
     watch: {
       myWrapperHeight(newValue) {
         this.$refs.myWrapper.style.height = newValue + 'px';
+      },
+      documentScrollTop(newValue) {
+        this.toFixedTab = newValue.documentScrollTop >= newValue.actionBarHeight;
       }
     },
     methods: {
@@ -86,7 +153,6 @@
       // 重设swiper-slide标签的宽度
       resetSwiperSlideHeight() {
         setTimeout(() => {
-          // this.slideContent.style.height = this.swiperWrapper.offsetHeight/* 实际高度 */ + 'px';
           if (this.swiper.el.children[0]) {
             if (this.swiper.el.children[0].children[0]) {
               this.swiper.el.children[0].children[0].children[0].style.height = this.swiperWrapper.offsetHeight/* 实际高度 */ + 'px';
@@ -112,11 +178,20 @@
 
 <style scoped lang="scss">
   @import "../css/color";
+  @import "../css/size";
 
   .my-wrapper {
     display: flex;
     flex-direction: column;
     height: 300px;
+    .tab {
+      flex-shrink: 0;
+    }
+    .tab-fixed {
+      position: fixed;
+      top: 0;
+      z-index: 2;
+    }
     .my-swiper-wrapper {
       flex-grow: 1;
       width: 100%;
@@ -128,6 +203,9 @@
           color: red;
         }
       }
+    }
+    .my-swiper-wrapper-marginTop {
+      margin-top: $tab_height;
     }
 
   }

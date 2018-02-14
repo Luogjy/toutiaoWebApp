@@ -1,5 +1,6 @@
 export const swiperProgress = state => state.swiperProgress;
 export const swiperActiveIndex = state => state.swiperActiveIndex;
+export const documentScrollTop = state => state.documentScrollTop;
 
 /**
  * https://vuex.vuejs.org/zh-cn/getters.html
