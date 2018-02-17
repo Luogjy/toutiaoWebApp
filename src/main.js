@@ -3,6 +3,7 @@ import App from './App';
 import router from './router';
 import './common/css/reset.scss';
 import store from './store';
+import {saveChannel} from './components/news/js/channel';
 
 Vue.config.productionTip = false;
 
@@ -13,3 +14,4 @@ new Vue({
   router,
   render: h => h(App)
 });
+saveChannel();

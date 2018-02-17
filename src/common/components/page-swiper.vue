@@ -5,60 +5,105 @@
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide :key="index" v-for="(item,index) in items">
           <div class="my-slide-content">
-            <div>{{item.name}}</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>啦啦啦啦啦</div>
-            <div>到底了</div>
+            <!--<div>{{item.name}}</div>-->
+            <div class="item-wrapper">
+              <div class="one">
+                <img class="icon" src="../img/user.png">
+                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+              </div>
+
+              <div class="two">
+                <div class="left">
+                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
+                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                </div>
+                <div class="right"></div>
+              </div>
+            </div>
+            <div class="item-wrapper">
+              <div class="one">
+                <img class="icon" src="../img/user.png">
+                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+              </div>
+
+              <div class="two">
+                <div class="left">
+                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
+                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                </div>
+                <div class="right"></div>
+              </div>
+            </div>
+            <div class="item-wrapper">
+              <div class="one">
+                <img class="icon" src="../img/user.png">
+                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+              </div>
+
+              <div class="two">
+                <div class="left">
+                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
+                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                </div>
+                <div class="right"></div>
+              </div>
+            </div>
+            <div class="item-wrapper">
+              <div class="one">
+                <img class="icon" src="../img/user.png">
+                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+              </div>
+
+              <div class="two">
+                <div class="left">
+                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
+                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                </div>
+                <div class="right"></div>
+              </div>
+            </div>
+            <div class="item-wrapper">
+              <div class="one">
+                <img class="icon" src="../img/user.png">
+                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+              </div>
+
+              <div class="two">
+                <div class="left">
+                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
+                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                </div>
+                <div class="right"></div>
+              </div>
+            </div>
+            <div class="item-wrapper">
+              <div class="one">
+                <img class="icon" src="../img/user.png">
+                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+              </div>
+
+              <div class="two">
+                <div class="left">
+                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
+                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                </div>
+                <div class="right"></div>
+              </div>
+            </div>
+            <div class="item-wrapper">
+              <div class="one">
+                <img class="icon" src="../img/user.png">
+                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+              </div>
+
+              <div class="two">
+                <div class="left">
+                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
+                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                </div>
+                <div class="right"></div>
+              </div>
+            </div>
           </div>
         </swiper-slide>
       </swiper>
@@ -180,6 +225,8 @@
   @import "../css/color";
   @import "../css/size";
 
+  $icon_height: 20px;
+
   .my-wrapper {
     display: flex;
     flex-direction: column;
@@ -196,12 +243,77 @@
     .my-swiper-wrapper {
       flex-grow: 1;
       width: 100%;
-      background: #222222;
+      background: $pageSwiper_bgColor;
       .swiper-slide {
-        background: yellowgreen;
-        width: 100%;
+        background: $pageSwiper_bgColor;
         .my-slide-content {
-          color: red;
+          box-sizing: border-box;
+          .item-wrapper {
+            box-sizing: border-box;
+            width: 100%;
+            background: #ffffff;
+            /*水平偏移、垂直偏移、模糊、扩展、颜色*/
+            box-shadow: 0 1px 1px 0 #C9C9C9;
+            border-top: solid #E8E8E8 1px;
+            padding: 10px 10px;
+            margin-top: 5px;
+            .one {
+              height: $icon_height;
+              font-size: 12px;
+              color: #767676;
+              .icon {
+                display: inline-block;
+                width: $icon_height;
+                background: $main_color;
+                border-radius: 50%;
+              }
+              .info {
+                margin-left: 5px;
+                line-height: $icon_height;
+                display: inline-block;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+            .two {
+              display: flex;
+              width: 100%;
+              .left {
+                width: 100%;
+                .title {
+                  display: inline-block;
+                  font-size: 14px;
+                  color: #757575;
+                  font-weight: bold;
+                  margin-top: 5px;
+                  line-height: 18px;
+                }
+                .abstract {
+                  height: 48px;
+                  color: #7B7B7B;
+                  margin-top: 6px;
+                  font-size: 13px;
+                  line-height: 16px;
+                  /*对象作为弹性伸缩盒子模型显示*/
+                  display: -webkit-box;
+                  /*设置或检索伸缩盒对象的子元素的排列方式*/
+                  -webkit-box-orient: vertical;
+                  /*溢出省略的界限*/
+                  -webkit-line-clamp: 3;
+                  overflow: hidden;
+                }
+              }
+              .right {
+                margin-top: 2px;
+                margin-left: 5px;
+                flex-shrink: 0;
+                width: 50px;
+                height: 50px;
+                background: $main_color;
+              }
+            }
+          }
         }
       }
     }
