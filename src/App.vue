@@ -13,7 +13,7 @@
       </keep-alive>
     </div>
 
-    <navigation-bar ref="navBar" class="nav-bar"/>
+    <navigation-bar ref="navBar" class="nav-bar" :class="showNavBar"/>
   </div>
 </template>
 
@@ -27,7 +27,9 @@
     data() {
       return {
         // myWrapperHeight: 100
-        initActionBarOffsetHeight: 0
+        initActionBarOffsetHeight: 0,
+        preScrollTop: 0,
+        toShowNavBar: true
       };
     },
     computed: {
@@ -39,6 +41,9 @@
       },
       wrapper() {
         return this.$refs.wrapper;
+      },
+      showNavBar() {
+        return this.toShowNavBar ? 'nav-bar-enter' : 'nav-bar-exit';
       }
     },
     mounted() {
@@ -52,6 +57,10 @@
       onScroll() {
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         this.setDocumentScrollTop({documentScrollTop: scrollTop, actionBarHeight: this.initActionBarOffsetHeight});
+
+        // 导航栏的交互
+        this.toShowNavBar = this.preScrollTop > scrollTop;
+        this.preScrollTop = scrollTop;
       },
       ...mapMutations({
         setDocumentScrollTop: 'DOCUMENT_SCROLL_TOP'
@@ -65,6 +74,7 @@
 
 <style scoped lang="scss">
   @import "./common/css/color";
+  @import "./common/css/size";
 
   .wrapper {
     width: 100%;
@@ -76,6 +86,16 @@
       position: fixed;
       bottom: 0;
       z-index: 1;
+    }
+    .nav-bar-exit {
+      transform: translateY($navigation_bar_height);
+      transition-property: transform;
+      transition-duration: 400ms;
+    }
+    .nav-bar-enter {
+      transform: translateY(0);
+      transition-property: transform;
+      transition-duration: 400ms;
     }
   }
 

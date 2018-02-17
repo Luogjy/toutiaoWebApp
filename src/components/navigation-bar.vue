@@ -48,7 +48,7 @@
         this.pictureActive = false;
         this.videoActive = false;
         this.toutiaouserActive = false;
-        this.$router.push('/news')
+        this.$router.push('/news');
       },
       picture() {
         this.$emit('clickPicture');
@@ -60,7 +60,7 @@
         this.pictureActive = true;
         this.videoActive = false;
         this.toutiaouserActive = false;
-        this.$router.push('/picture')
+        this.$router.push('/picture');
       },
       video() {
         this.$emit('clickVideo');
@@ -72,7 +72,7 @@
         this.pictureActive = false;
         this.videoActive = true;
         this.toutiaouserActive = false;
-        this.$router.push('/video')
+        this.$router.push('/video');
       },
       toutiaouser() {
         this.$emit('clickToutiaouser');
@@ -84,7 +84,7 @@
         this.pictureActive = false;
         this.videoActive = false;
         this.toutiaouserActive = true;
-        this.$router.push('/toutiaouser')
+        this.$router.push('/toutiaouser');
       }
 
     }
@@ -92,15 +92,16 @@
 </script>
 
 <style scoped lang="scss">
+  @import "../common/css/size";
+
   $item_width: 72px;
   $img_width: 20px;
-  $bar_height: 44px;
   $color_normal: #616161;
   $color_active: #607D8B;
 
   .wrapper {
     box-sizing: border-box;
-    height: $bar_height;
+    height: $navigation_bar_height;
     display: flex;
     flex-direction: row;
     white-space: nowrap;
