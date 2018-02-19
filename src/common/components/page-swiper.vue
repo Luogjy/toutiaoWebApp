@@ -5,103 +5,25 @@
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide :key="index" v-for="(item,index) in items">
           <div class="my-slide-content">
-            <!--<div>{{item.name}}</div>-->
-            <div class="item-wrapper">
+            <div class="item-wrapper" v-if="item.contents" :key="content.title" v-for="(content) in item.contents">
               <div class="one">
-                <img class="icon" src="../img/user.png">
-                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
+                <img v-if="content.media_info" class="icon" :src="content.media_info.avatar_url">
+                <img v-else class="icon border">
+                <span class="info">{{content.media_name}}-{{content.comment_count}}评论-{{formatBeHotTime(content.behot_time)}}</span>
               </div>
 
               <div class="two">
                 <div class="left">
-                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
-                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                  <span class="title">{{content.title}}</span>
+                  <div v-if="!content.video_detail_info" class="abstract">{{content.abstract}}</div>
+                  <div v-else-if="content.video_detail_info" class="snapshot">
+                    <img :src="content.video_detail_info.detail_video_large_image.url" class="img-snapshot">
+                    <span class="snapshot-time">{{snapshotTime(content.video_duration)}}</span>
+                  </div>
                 </div>
-                <div class="right"></div>
-              </div>
-            </div>
-            <div class="item-wrapper">
-              <div class="one">
-                <img class="icon" src="../img/user.png">
-                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
-              </div>
-
-              <div class="two">
-                <div class="left">
-                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
-                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
+                <div v-if="content.image_list" class="right">
+                  <img class="title-img" :src="content.image_list[0].url">
                 </div>
-                <div class="right"></div>
-              </div>
-            </div>
-            <div class="item-wrapper">
-              <div class="one">
-                <img class="icon" src="../img/user.png">
-                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
-              </div>
-
-              <div class="two">
-                <div class="left">
-                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
-                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
-                </div>
-                <div class="right"></div>
-              </div>
-            </div>
-            <div class="item-wrapper">
-              <div class="one">
-                <img class="icon" src="../img/user.png">
-                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
-              </div>
-
-              <div class="two">
-                <div class="left">
-                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
-                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
-                </div>
-                <div class="right"></div>
-              </div>
-            </div>
-            <div class="item-wrapper">
-              <div class="one">
-                <img class="icon" src="../img/user.png">
-                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
-              </div>
-
-              <div class="two">
-                <div class="left">
-                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
-                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
-                </div>
-                <div class="right"></div>
-              </div>
-            </div>
-            <div class="item-wrapper">
-              <div class="one">
-                <img class="icon" src="../img/user.png">
-                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
-              </div>
-
-              <div class="two">
-                <div class="left">
-                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
-                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
-                </div>
-                <div class="right"></div>
-              </div>
-            </div>
-            <div class="item-wrapper">
-              <div class="one">
-                <img class="icon" src="../img/user.png">
-                <span class="info">世界斯诺克中文官网-100评论-5分钟前</span>
-              </div>
-
-              <div class="two">
-                <div class="left">
-                  <span class="title">比特币终于迎来了资产的历史难题：继承权</span>
-                  <div class="abstract">摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要摘要</div>
-                </div>
-                <div class="right"></div>
               </div>
             </div>
           </div>
@@ -138,7 +60,7 @@
             el: '.swiper-scrollbar'
           },
           speed: 150, // 划动时的切换速度，默认300毫秒
-          // autoHeight: true, // wrapper和container会随着当前slide的高度而发生变化
+          autoHeight: true, // wrapper和container会随着当前slide的高度而发生变化
           watchSlidesProgress: true,
           on: {
             progress: function (progress) {
@@ -181,7 +103,7 @@
       ...mapGetters(['documentScrollTop'])
     },
     mounted() {
-      this.resetSwiperSlideHeight();
+      // this.resetSwiperSlideHeight();
     },
     watch: {
       myWrapperHeight(newValue) {
@@ -195,7 +117,7 @@
       currentItem(index) {
         this.swiper.slideTo(index, 150, false);
       },
-      // 重设swiper-slide标签的宽度
+      // 重设swiper-slide标签的高度
       resetSwiperSlideHeight() {
         setTimeout(() => {
           if (this.swiper.el.children[0]) {
@@ -204,6 +126,28 @@
             }
           }
         }, 20);
+      },
+      formatBeHotTime(time) { // 格式化创建时间
+        let now = Math.floor(new Date().getTime() / 1000);
+        let between = (now - time) / 60;
+        if (between <= 1) { // 如果在当前时间以前一分钟内
+          return '刚刚';
+        } else if (between <= 60) {
+          return Math.floor(between) + '分钟前';
+        } else if (between <= 60 * 24) {
+          return Math.floor(between / 60) + '小时前';
+        } else {
+          return Math.floor(between / (60 * 24)) + '天前';
+        }
+      },
+      // 视频时长格式化
+      snapshotTime(duration) {
+        let min = Math.floor(duration / 60);
+        let sec = duration % 60;
+        if (sec < 10) {
+          sec = '0' + sec;
+        }
+        return `${min}:${sec}`;
       },
       /*
         https://vuex.vuejs.org/zh-cn/mutations.html
@@ -257,6 +201,7 @@
             border-top: solid #E8E8E8 1px;
             padding: 10px 10px;
             margin-top: 5px;
+            margin-bottom: 5px;
             .one {
               height: $icon_height;
               font-size: 12px;
@@ -264,8 +209,10 @@
               .icon {
                 display: inline-block;
                 width: $icon_height;
-                background: $main_color;
                 border-radius: 50%;
+              }
+              .border {
+                border: #E1E1E1 1px dashed;
               }
               .info {
                 margin-left: 5px;
@@ -283,7 +230,7 @@
                 width: 100%;
                 .title {
                   display: inline-block;
-                  font-size: 14px;
+                  font-size: 13px;
                   color: #757575;
                   font-weight: bold;
                   margin-top: 5px;
@@ -303,14 +250,38 @@
                   -webkit-line-clamp: 3;
                   overflow: hidden;
                 }
+                .snapshot {
+                  width: 100%;
+                  margin-top: 6px;
+                  position: relative;
+                  .img-snapshot {
+                    width: 100%;
+                  }
+                  .snapshot-time {
+                    background: rgba(0, 0, 0, 0.5);
+                    color: #ffffff;
+                    font-weight: normal;
+                    border-radius: 4px;
+                    font-size: 12px;
+                    padding: 5px 8px;
+                    position: absolute;
+                    bottom: 8px;
+                    right: 5px;
+                  }
+                }
               }
               .right {
+                box-sizing: border-box;
                 margin-top: 2px;
                 margin-left: 5px;
                 flex-shrink: 0;
-                width: 50px;
-                height: 50px;
-                background: $main_color;
+                width: 80px;
+                height: 80px;
+                overflow: hidden;
+                .title-img {
+                  margin-left: -15px;
+                  width: 120px;
+                }
               }
             }
           }

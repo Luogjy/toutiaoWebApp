@@ -11,14 +11,12 @@ export function updateChannel(channel) {
 }
 
 export function saveChannel() {
-  console.log('缓存');
   let arr = storage.get(KEY_CHANNEL, []);
-  console.log(arr.length);
   if (!arr.length) {
     storage.set(KEY_CHANNEL,
       [
         {
-          id: ' ',
+          id: '',
           name: '推荐',
           isEnable: 1
         },

@@ -1,1 +1,1 @@
-
+export const requestSuccessStr = 'success';
