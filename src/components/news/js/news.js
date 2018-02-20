@@ -4,9 +4,9 @@ const baseUrl1 = 'http://is.snssdk.com/api/news/feed/v62/?iid=5034850950&device_
 const baseUrl2 = 'http://lf.snssdk.com/api/news/feed/v62/?iid=12507202490&device_id=37487219424&refer=1&count=20&aid=13';
 const baseUrl3 = 'http://is.snssdk.com/wenda/v1/native/feedbrow/?iid=10344168417&device_id=36394312781&category=question_and_answer&wd_version=5&count=20&aid=13';
 
-export function getNewsList(channelId) {
-  if (channelId === 'question_and_answer') {
-    return getWenDa();
+export function getNewsList(item) {
+  if (item.id === 'question_and_answer') {
+    return getWenDa(item);
   }
   let n = Math.floor(10 * Math.random());
   let url;
@@ -17,8 +17,8 @@ export function getNewsList(channelId) {
   }
   let time = Math.floor(new Date().getTime() / 1000);
   const data = {
-    category: channelId,
-    max_behot_time: time
+    category: item.id,
+    max_behot_time: item.max_behot_time ? item.max_behot_time : time
   };
   const options = {
     // param: 'jsonpCallback'
@@ -26,10 +26,11 @@ export function getNewsList(channelId) {
   return jsonp(url, data, options);
 }
 
-function getWenDa() {
+function getWenDa(item) {
   let time = Math.floor(new Date().getTime() / 1000);
   const data = {
-    max_behot_time: time
+    max_behot_time: item.max_behot_time ? item.max_behot_time : time
+    // max_behot_time: time
   };
   return jsonp(baseUrl3, data, {});
 }

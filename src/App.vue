@@ -21,7 +21,7 @@
   import ActionBar from './common/components/action-bar';
   import NavigationBar from './components/navigation-bar';
   import PageSwiper from './common/components/page-swiper';
-  import {mapMutations} from 'vuex';
+  import {mapMutations, mapGetters} from 'vuex';
 
   export default {
     data() {
@@ -44,10 +44,12 @@
       },
       showNavBar() {
         return this.toShowNavBar ? 'nav-bar-enter' : 'nav-bar-exit';
-      }
+      },
+      ...mapGetters(['swiperActiveIndex', 'theType', 'autoScroll'])
     },
     mounted() {
       this.initActionBarOffsetHeight = this.actionBar.offsetHeight;
+      this.setActionBarHeight(this.initActionBarOffsetHeight);
       this.$nextTick(function () {
         window.addEventListener('scroll', this.onScroll);
       });
@@ -58,12 +60,17 @@
         let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
         this.setDocumentScrollTop({documentScrollTop: scrollTop, actionBarHeight: this.initActionBarOffsetHeight});
 
-        // 导航栏的交互
-        this.toShowNavBar = this.preScrollTop > scrollTop;
-        this.preScrollTop = scrollTop;
+        // if (!this.autoScroll) { // todo 滚动到记录的位置【先放着，不够理想】
+          // 导航栏的交互
+          this.toShowNavBar = this.preScrollTop > scrollTop;
+          this.preScrollTop = scrollTop;
+        // }
+        // this.setAutoScroll(false); // todo 滚动到记录的位置【先放着，不够理想】
       },
       ...mapMutations({
-        setDocumentScrollTop: 'DOCUMENT_SCROLL_TOP'
+        setDocumentScrollTop: 'DOCUMENT_SCROLL_TOP',
+        setActionBarHeight: 'ACTION_BAR_HEIGHT',
+        setAutoScroll: 'AUTO_SCROLL'
       })
     },
     components: {

@@ -44,7 +44,7 @@
       },
       title: {
         type: String,
-        default: '啊哈哈aaab'
+        default: '正在编写ing... (ง •̀_•́)ง'
       }
     },
     methods: {

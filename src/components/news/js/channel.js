@@ -10,6 +10,15 @@ export function updateChannel(channel) {
   storage.set(KEY_CHANNEL, channel);
 }
 
+export function clearChannelTimeAndScrollY() {
+  let arr = storage.get(KEY_CHANNEL, []);
+  arr.forEach((item) => {
+    item.max_behot_time = null;
+    item.scrollY = null;
+  });
+  storage.set(KEY_CHANNEL, arr);
+}
+
 export function saveChannel() {
   let arr = storage.get(KEY_CHANNEL, []);
   if (!arr.length) {

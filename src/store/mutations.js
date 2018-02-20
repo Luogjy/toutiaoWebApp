@@ -9,6 +9,15 @@ const mutations = {
   },
   [types.DOCUMENT_SCROLL_TOP](state, {documentScrollTop, actionBarHeight}) {
     state.documentScrollTop = {documentScrollTop, actionBarHeight};
+  },
+  [types.THE_TYPE](state, theType) {
+    state.theType = theType;
+  },
+  [types.ACTION_BAR_HEIGHT](state, actionBarHeight) {
+    state.actionBarHeight = actionBarHeight;
+  },
+  [types.AUTO_SCROLL](state, autoScroll) {
+    state.autoScroll = autoScroll;
   }
 
 };

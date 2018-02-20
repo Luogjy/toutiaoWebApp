@@ -24,6 +24,9 @@
 </template>
 
 <script>
+  import {TypePicture, TypeNews, TypeToutiaouser, TypeVideo} from '../common/js/constant';
+  import {mapMutations} from 'vuex';
+
   export default {
     data() {
       return {
@@ -49,6 +52,7 @@
         this.videoActive = false;
         this.toutiaouserActive = false;
         this.$router.push('/news');
+        this.setTheType(TypeNews);
       },
       picture() {
         this.$emit('clickPicture');
@@ -61,6 +65,7 @@
         this.videoActive = false;
         this.toutiaouserActive = false;
         this.$router.push('/picture');
+        this.setTheType(TypePicture);
       },
       video() {
         this.$emit('clickVideo');
@@ -73,6 +78,7 @@
         this.videoActive = true;
         this.toutiaouserActive = false;
         this.$router.push('/video');
+        this.setTheType(TypeVideo);
       },
       toutiaouser() {
         this.$emit('clickToutiaouser');
@@ -85,8 +91,11 @@
         this.videoActive = false;
         this.toutiaouserActive = true;
         this.$router.push('/toutiaouser');
-      }
-
+        this.setTheType(TypeToutiaouser);
+      },
+      ...mapMutations({
+        setTheType: 'THE_TYPE'
+      })
     }
   };
 </script>
