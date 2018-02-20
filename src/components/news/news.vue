@@ -18,18 +18,35 @@
     },
     created() {
       this.items = getEnableChannel(); // 获取开启的频道
-      this.items.forEach((item, index) => {
+      this.items.forEach((item) => {
+        this._getNewsList(item);
+      });
+    },
+    methods: {
+      _getNewsList(item) {
         getNewsList(item.id).then((res) => {
           // item.contents = []; // 添加属性contents
           this.$set(item, 'contents', []); // 添加属性contents。设置对象的属性。如果对象是响应式的，确保属性被创建后也是响应式的，同时触发视图更新。这个方法主要用于避开 Vue 不能检测属性被添加的限制。
           if (res.message === requestSuccessStr) {
             res.data.forEach((item1, index) => {
-              item.contents.push(JSON.parse(item1.content));
+              let content = JSON.parse(item1.content);
+              if (content.title) { // 一般新闻
+                item.contents.push(content);
+              } else {
+                if (item.id === 'question_and_answer') { // 问答
+                  if (content.question) { // 有题目的
+                    content.question = JSON.parse(content.question);
+                    content.answer = JSON.parse(content.answer);
+                    content.extra = JSON.parse(content.extra);
+                    item.contents.push(content);
+                  }
+                }
+              }
             });
           }
           console.log(item);
         });
-      });
+      }
     },
     components: {
       PageSwiper
