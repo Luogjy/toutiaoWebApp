@@ -5,7 +5,8 @@
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide :key="index" v-for="(item,index) in items">
           <div class="my-slide-content">
-            <div class="item-wrapper" v-if="item.contents" :key="content.title" v-for="(content) in item.contents">
+            <div class="item-wrapper" v-if="item.contents&&content.title" :key="content.title"
+                 v-for="(content) in item.contents">
               <div class="one">
                 <img v-if="content.media_info" class="icon" :src="content.media_info.avatar_url">
                 <img v-else class="icon border">
