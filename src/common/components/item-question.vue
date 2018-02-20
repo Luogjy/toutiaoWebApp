@@ -9,7 +9,7 @@
            :src="content.extra.wenda_image.large_image_list[0].url">
       <div v-else class="abstract">{{content.answer.abstract}}</div>
       <div class="info">
-        <span class="answer-count">{{content.question.nice_ans_count+content.question.normal_ans_count}}回答</span>
+        <span class="answer-count">回答 {{content.question.nice_ans_count+content.question.normal_ans_count}}</span>
         <span class="time">{{formatCreateTime(content.question.create_time)}}</span>
       </div>
     </div>

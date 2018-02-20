@@ -3,9 +3,10 @@
     <div class="item-wrapper" :key="content.title" v-for="(content) in contents">
       <div class="one">
         <img v-if="content.media_info" class="icon" :src="content.media_info.avatar_url">
-        <img v-else class="icon border">
+        <!--没有src会多个框出来的，所有加个看不见的图片吧-->
+        <img v-else class="icon border" src="../img/user.png">
         <span
-          class="info">{{content.media_name}}-{{content.comment_count}}评论-{{formatBeHotTime(content.behot_time)}}</span>
+          class="info">{{content.media_name}}-{{content.comment_count}}条评论-{{formatBeHotTime(content.behot_time)}}</span>
       </div>
       <div class="two">
         <div class="left">
@@ -69,8 +70,9 @@
       font-size: 12px;
       color: #767676;
       .icon {
-        display: inline-block;
+        box-sizing: border-box;
         width: $icon_height;
+        height: $icon_height;
         border-radius: 50%;
       }
       .border {
