@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-swiper @slideChangeTransitionEnd="slideChangeTransitionEnd" :items="items"/>
+    <page-swiper :items="items"/>
   </div>
 </template>
 
